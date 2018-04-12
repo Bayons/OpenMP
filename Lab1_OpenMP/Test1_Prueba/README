@@ -1,0 +1,13 @@
+
+1. Compilar y ejecutar el programa secuencial
+
+2. Incluir el fichero de cabecera de la biblioteca OpenMP, escribir el identificador
+	y el total de threads en el printf
+
+3. Compilar con -fopenmp
+	Ejecutar con diferentes cantidades de hilos cambiando la variable de entorno
+
+4. Compilar sin -fopenmp, con -lgomp
+	Comprobar que se sigue ejecutando el código secuencial.
+	Observar el identificador y cantidad de hilos cuando se compila en secuencial
+

@@ -1,0 +1,17 @@
+
+1. Seguir las indicaciones de los comentarios del programa para paralelizar 
+	el bucle de trabajo principal
+
+2. Comprobar que el resultado es el mismo independientemente del número de threads
+
+3. Usando el comando time, comprobar que el tiempo se reduce al pasar de uno a más threads
+	Determinar el número de cores de la máquina viendo los resultados
+
+4. Añadir medidas de tiempo con omp_get_wtime() para medir por separado el tiempo total y el de la parte paralela 
+
+5. Paralelizar también el bucle de inicialización del vector
+	Comprobar las mejoras de tiempo con varios threads
+
+6. Comprobar si tarda más compilando en secuencial (sin -fopenmp) o con
+	OpenMP activado pero sólo un hilo (overheads?)
+

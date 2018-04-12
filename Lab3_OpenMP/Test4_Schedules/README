@@ -1,0 +1,31 @@
+
+Observar los tres códigos de ejemplo. 
+- ¿Es regular la cantidad de cómputo que ejecuta cada iteración de los bucles anidados?
+- ¿Sigue algún patrón predecible en alguno de los ejemplos?
+
+1. Incluir un pragma parallel que envuelva a los bucles de cómputo. Tener en
+	cuenta qué variables deben ser privadas.
+
+2. Incluir un pragma for en el bucle exterior, utilizando la cláusula schedule para 
+	probar diferentes opciones de planificación de las iteraciones:
+
+	- Bloques contiguos: Por defecto sin schedule (o static sin tamaño de chunk)
+	- Bloques cíclicos: Static con tamaño de bloque 8 o 16
+	- Dynamic con tamaño de bloque 1 (por defecto), 8 o 16
+	- Guided, con tamaño de bloque mínimo 1 (por defecto), 8 o 16
+
+	Compilar con -fopenmp y -O3.
+	Comparar los tiempos obtenidos al ejecutar cada versión con un número de threads igual 
+	al número de cores de la máquina (por 2 si tiene opción de hyperthreading). Deducir 
+	que opciones son más adecuadas en cada problema y por qué.
+
+3. ¿Es correcto paralelizar el bucle interior utilizando la cláusula nowait
+	para reducir las sincronizaciones? ¿Con cualquier schedule?
+
+4. Con el schedule por defecto, ¿es diferente paralelizar el bucle exterior, o el interior
+	en alguno de los ejemplos? ¿Y con el mejor schedule?
+
+5. Con el mejor schedule, ¿tiene algún efecto utilizar la cláusula collapse en alguno 
+	de los ejemplos?
+
+

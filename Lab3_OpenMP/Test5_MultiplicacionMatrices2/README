@@ -1,0 +1,18 @@
+
+Siguiendo con el problema de la multiplicación de matrices.
+
+1. Comparar los tiempos obtenidos al paralelizar con un número de threads igual al número
+	de cores de la máquina (por 2 si tiene opción de hyperthreading), aplicando pragmas
+	de paralelización de bucles OpenMP sólo sobre el bucle exterior, o utilizando 
+	collapse(2) para paralelizar simultaneamente los dos bucles.
+
+2. Utilizar la cláusula schedule para probar diferentes opciones de planificación de las
+	iteraciones:
+
+	- Bloques cíclicos: Static con tamaño de bloque 8 o 16
+	- Dynamic con tamaño de bloque 1 (por defecto), 8 y 16
+	- Guided, con tamaño de bloque mínimo 1 (por defecto), 8 y 16
+
+	Utilizar estas opciones con el bucle exterior, con y sin collapse. Deducir que opciones
+	son más adecuadas en este problema y por qué.
+

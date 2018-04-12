@@ -1,0 +1,13 @@
+
+En la clase práctica anterior utilizamos un sencillo ejemplo para paralelizar bucles.
+Sin embargo, la suma final de comprobación no pudimos paralelizarla.
+
+1. Seguir las indicaciones de los comentarios del programa para paralelizar 
+	el bucle de trabajo principal. 
+	Medir tiempos de ejecución con diferentes números de threads.
+
+2. Seguir las indicaciones de los comentarios del programa para paralelizar 
+	también el bucle de suma de comprobación.
+	Medir tiempos de ejecución con diferentes números de threads.
+	(Comprobar siempre que el resultado es el mismo)
+

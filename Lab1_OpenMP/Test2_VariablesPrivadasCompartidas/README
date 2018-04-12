@@ -1,0 +1,5 @@
+
+1. Seguir los comentarios del programa
+2. Compilar con -fopenmp y comprobar la ejecución
+3. Comprobar que ocurre con un número de hilos mayor de 10
+
