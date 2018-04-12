@@ -1,3 +1,4 @@
+/**** HECHO ****/
 
 En la clase práctica anterior utilizamos un sencillo ejemplo para paralelizar bucles.
 Sin embargo, la suma final de comprobación no pudimos paralelizarla.

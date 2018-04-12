@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo Compilando...
-gcc -fopenmp ./matrixMult.c -o chicha
+gcc -fopenmp ./matrixMult.c -o exe
 
 echo Ejecutando...
-./chicha
+./exe
