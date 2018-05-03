@@ -1,6 +1,6 @@
 
-CFLAGS=-O3 -I.
-DEBUG_FLAGS=-g -DDEBUG
+CFLAGS=-O3 -fopenmp -I.
+DEBUG_FLAGS=-g -fopenmp -DDEBUG
 LIBS=-lm
 
 energy: energy_v2.c

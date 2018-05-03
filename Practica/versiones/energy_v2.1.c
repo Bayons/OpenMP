@@ -159,25 +159,21 @@ int main(int argc, char *argv[]) {
 	float *layer_copy;
 #pragma omp parallel
 {
-
-#pragma omp single
-	layer = (float *)malloc( sizeof(float) * layer_size );
-#pragma omp single
-	layer_copy = (float *)malloc( sizeof(float) * layer_size );
-
-#pragma omp master
+#pragma omp sections
 {
+#pragma omp section
+	layer = (float *)malloc( sizeof(float) * layer_size );
+#pragma omp section
+	layer_copy = (float *)malloc( sizeof(float) * layer_size );
+}
+
 	if ( layer == NULL || layer_copy == NULL ) {
 		fprintf(stderr,"Error: Allocating the layer memory\n");
 		exit( EXIT_FAILURE );
 	}
-}
-#pragma omp barrier
-#pragma omp parallel for shared(layer)
 	for( k=0; k<layer_size; k++ ) layer[k] = 0.0f;
-#pragma omp parallel for shared(layer_copy)
 	for( k=0; k<layer_size; k++ ) layer_copy[k] = 0.0f;
-
+}	
 	/* 4. Fase de bombardeos */
 	for( i=0; i<num_storms; i++) {
 
@@ -202,10 +198,8 @@ int main(int argc, char *argv[]) {
 			layer_copy[k] = layer[k];
 
 		/* 4.2.2. Actualizar capa, menos los extremos, usando valores del array auxiliar */
-//#pragma omp parallel for shared(layer, layer_copy) reduction(/:division)
-		for( k=1; k<layer_size-1; k++ ){
+		for( k=1; k<layer_size-1; k++ )
 			layer[k] = ( layer_copy[k-1] + layer_copy[k] + layer_copy[k+1] ) / 3;
-		}
 
 		/* 4.3. Localizar maximo */
 		for( k=1; k<layer_size-1; k++ ) {
@@ -218,7 +212,6 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-}/* fin del pragma omp */
 
 /*^	^	^	^	^	^	^	^	^*/
 /*|	|	|	|	|	|	|	|	|*/

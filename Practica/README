@@ -1,0 +1,74 @@
+****** INSTRUCCIONES PARA COMPILAR ******
+El fichero Makefile esta preparado para compilar automaticamente el fichero "energy_v2.c". Para compilar, tan solo hace falta situarse en la misma ubicacion que los archivos y escribir "make".
+
+Para una representacion visual de los resultados, se puede hacer "make debug" que genera un ejecutable "debug" y ofrece un pequeño esquema del resultado final de cada punto del vector, siempre y cuando este sea menor de 35.
+
+
+***** DESCRIPCION DEL PROBLEMA *****
+
+1. Simulación de bombardeo de partículas
+Se suministra a los alumnos un código secuencial (ver apéndices al final de la página) para simular los efectos de un bombardeo de particulas sobre una superficie expuesta. El programa es una simplificación de simulaciones de bombardeo de particulas de alta energía en el espacio.
+
+En la simulación sólo se considera un corte transversal de la superficie. El corte se representa por una serie de puntos de control discretos. Se utilizará un array para representar la cantidad de energía recibida cada punto de la capa más expuesta del material. El programa calcula los resultados del impacto de diversas oleadas o tormentas de partículas, calculando en cada una de ellas cúal es el punto más dañado.
+
+El siguiente ejemplo muestra el resultado del programa para 30 puntos tras tres oleadas. Para cada punto aparece el valor final de energía y una barra de caracteres que representa esa intensidad de forma normalizada con el máximo final.  Para los puntos donde aparecen máximos locales se substituye el último carácter por un símbolo x al final de la línea. Los puntos que fueron máximos globales tras cada oleada aparecen marcados con M y el número de oleada. Al final se muestra el tiempo de ejecución y la lista de localizaciones y valores de los máximos tras cada oleada.
+
+    0.3996 |ooooooooooooooooooooooooooooooooooooooo
+    0.4325 |ooooooooooooooooooooooooooooooooooooooooooo
+    0.4684 |oooooooooooooooooooooooooooooooooooooooooooooo
+    0.5092 |oooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5308 |ooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5398 |oooooooooooooooooooooooooooooooooooooooooooooooooooox
+    0.5371 |ooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5472 |oooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5646 |oooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5914 |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.6009 |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooox M2
+    0.6004 |ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5878 |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5858 |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5829 |oooooooooooooooooooooooooooooooooooooooooooooooooooooooooo M0
+    0.5692 |oooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5464 |oooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5219 |oooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5078 |oooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5042 |oooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5079 |oooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5122 |ooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5157 |ooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5238 |oooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5363 |ooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.5488 |ooooooooooooooooooooooooooooooooooooooooooooooooooooox
+    0.5475 |oooooooooooooooooooooooooooooooooooooooooooooooooooooo M1
+    0.5297 |oooooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.4957 |ooooooooooooooooooooooooooooooooooooooooooooooooo
+    0.4537 |ooooooooooooooooooooooooooooooooooooooooooooo
+
+Time: 0.000042
+Result: 14 0.381967 26 0.499453 10 0.600869
+
+
+2. Detalles del código secuencial
+Argumentos del programa
+
+size: Número de puntos de control (tamaño del array donde se almacenan las energía)
+lista de ficheros de oleadas: Una serie de nombres de fichero (puedes estar repetidos), con la información de cada oleada.
+Formato de los ficheros de oleada
+
+Cada oleada de partículas se lee de un fichero de texto y se almacena en una estructura que contiene sus datos. La primera línea del fichero contiene el número de partículas. Cada partícula se define en una línea con dos números enteros. El identificador del punto de contacto y el valor de energía en milésimas de Julios.
+
+Podéis crear vuestros propios test. Hay algunos ejemplos al final de la página.
+
+Descripción del funcionamiento
+
+El programa recorre las partículas de cada oleada, y por cada una recorre el array que simula la energía de la capa en cada punto, calculando el aporte de energía acumulado. Al impactar una partícula, trasmite su energía al punto de contacto y los de sus alrededores, siguiendo una función de atenuación. El punto de impacto es donde más energía se acumula. Cuanto más lejos, menos energía se acumula. Existe un umbral mínimo de energía (que depende del material). En los puntos donde no se alcanza el umbral mínimo por estar demasiado lejos del punto de impacto, no se acumula energía.
+
+Tras cada oleada, se produce una fase de relajación, en la que el material responde distribuyendo ligeramente la carga. Cada punto toma el valor de la media de tres puntos: El propio punto, el anterior y el posterior.
+
+Finalmente, se localiza el valor y posición de máxima energía tras esa oleada. Se repite todo el proceso para cada oleada.
+
+Modo Debug
+
+Si compiláis el programa con -DDEBUG (lo puede hacer el makefile suministrado automáticamente), y el número de puntos del array no es mayor de 35, se muestra un gráfico de resultado como el ejemplo mostrado al principio de la página.
+
+Para hacer pruebas podéis ejecutar el programa original con los ficheros deseados y copiad los resultados. Ejecutad con los mismos ficheros el programa modificado y comparad los resultados. Si hay condiciones de carrera al repetir el experimento con los mismos ficheros suele producir resultados diferentes.
