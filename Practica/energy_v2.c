@@ -177,6 +177,7 @@ int main(int argc, char *argv[]) {
 	for( k=0; k<layer_size; k++ ) layer[k] = 0.0f;
 #pragma omp parallel for shared(layer_copy)
 	for( k=0; k<layer_size; k++ ) layer_copy[k] = 0.0f;
+}/* fin del pragma omp */
 
 	/* 4. Fase de bombardeos */
 	for( i=0; i<num_storms; i++) {
@@ -198,6 +199,7 @@ int main(int argc, char *argv[]) {
 
 		/* 4.2. Relajacion entre tormentas de particulas */
 		/* 4.2.1. Copiar valores a capa auxiliar */
+//#pragma omp parallel for shared(layer, layer_copy)
 		for( k=0; k<layer_size; k++ ) 
 			layer_copy[k] = layer[k];
 
@@ -218,7 +220,6 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-}/* fin del pragma omp */
 
 /*^	^	^	^	^	^	^	^	^*/
 /*|	|	|	|	|	|	|	|	|*/
